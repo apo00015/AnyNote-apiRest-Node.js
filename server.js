@@ -24,8 +24,12 @@ app.get('/', (request, response) => {
 })
 
 const userRouter = require('./routes/user');
+const notasRouter = require('./routes/note')
+const userNoteRouter = require('./routes/user_note')
 
 app.use('/user',userRouter);
+app.use('/note',notasRouter);
+app.use('/userNote',userNoteRouter)
 
 /**Servidor escuchando */
 app.listen(PORT, () => {
