@@ -58,7 +58,7 @@ router.post('/add', async function (req, res) {
                 res.status(400).send(err.message);
             }
             console.log(`No hay ningún eror, se ha creado la relación entre ${email} y (${planta} - ${habitacion} - ${cama} - ${fechaActualizacion} - ${emailCreado})`);
-            res.status(200).json(result);; // Devolvemos el identificador del usuario
+            res.status(200).json(result); // Devolvemos el identificador del usuario
         });
 
     } catch (err) {
