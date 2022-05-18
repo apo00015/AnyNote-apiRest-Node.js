@@ -9,7 +9,7 @@ router.get('/:email', async function(req,res){
 
     console.log(`Se quiere realizar un GET del usuario con email: ${req.params.email}`)
     try {
-        const sqlQuery = 'SELECT * FROM tfg.Usuario WHERE email=?';
+        const sqlQuery = 'SELECT * FROM Usuario WHERE email=?';
         pool.query(sqlQuery, [req.params.email], function (err, result, fields) {
             if (err) 
                 throw err;
@@ -40,7 +40,7 @@ router.post('/register', async function(req,res) {
         console.log(`El email recibido es: ${email} y el nombre recibido es: ${nombre} y la fecha de actualización es ${fechaActualizado}`);
 
         // Realizamos la consulta
-        const sqlQuery = 'INSERT INTO tfg.Usuario (email, nombre,fechaActualizado) VALUES (?,?,?)';
+        const sqlQuery = 'INSERT INTO Usuario (email, nombre,fechaActualizado) VALUES (?,?,?)';
         pool.query(sqlQuery,[email, nombre,fechaActualizado], function (err, result) {
             if (err){
                 res.status(400).send(err.message);
@@ -65,7 +65,7 @@ router.post('/register', async function(req,res) {
     console.log(`Se quiere realizar DELETE del usuario con email: ${req.params.email}`);
     try {
         // Realizamos la consulta
-        const sqlQuery = 'DELETE FROM tfg.Usuario WHERE email = ?';
+        const sqlQuery = 'DELETE FROM Usuario WHERE email = ?';
         pool.query(sqlQuery, [req.params.email], function (err, result) {
             if (err){
                 throw err;
@@ -95,7 +95,7 @@ router.post('/register', async function(req,res) {
         console.log(`El email recibido es: ${email}  y la última fecha de actualización es del: ${fechaActualizado}`);
 
         // Realizamos la consulta
-        const sqlQuery = 'UPDATE tfg.Usuario SET fechaActualizado = ? WHERE email = ?';
+        const sqlQuery = 'UPDATE Usuario SET fechaActualizado = ? WHERE email = ?';
         pool.query(sqlQuery,[fechaActualizado,email], function (err, result) {
             if (err){
                 throw err;

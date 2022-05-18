@@ -11,7 +11,7 @@ router.get('/', async function (req, res) {
     try {
         // Obtenemos los parámteros del body
         const { planta, habitacion, cama, fechaActualizacion, emailUser } = req.body;
-        const sqlQuery = 'SELECT * FROM tfg.Nota WHERE planta =? AND habitacion = ? AND cama = ? AND fechaActualizacion = ? AND emailCreado = ?';
+        const sqlQuery = 'SELECT * FROM Nota WHERE planta =? AND habitacion = ? AND cama = ? AND fechaActualizacion = ? AND emailCreado = ?';
         pool.query(sqlQuery, [planta, habitacion, cama, fechaActualizacion, emailUser], function (err, result, fields) {
             if (err)
                 throw err;
@@ -41,7 +41,7 @@ router.post('/add', async function (req, res) {
         const { planta, habitacion, cama, fechaActualizacion, observaciones1, observaciones2, emailCreado, ct_frecuenciaCardiaca, ct_frecuenciaRespiratoria, ct_temperatura, ct_presionArterial } = req.body;
         console.log(req.body)
         // Realizamos la consulta
-        const sqlQuery = 'INSERT INTO tfg.Nota (planta, habitacion, cama, fechaActualizacion, observaciones1, observaciones2, emailCreado, ct_frecuenciaCardiaca, ct_frecuenciaRespiratoria, ct_temperatura, ct_presionArterial) VALUES (?,?,?,?,?,?,?,?,?,?,?)';
+        const sqlQuery = 'INSERT INTO Nota (planta, habitacion, cama, fechaActualizacion, observaciones1, observaciones2, emailCreado, ct_frecuenciaCardiaca, ct_frecuenciaRespiratoria, ct_temperatura, ct_presionArterial) VALUES (?,?,?,?,?,?,?,?,?,?,?)';
         pool.query(sqlQuery, [planta, habitacion, cama, fechaActualizacion, observaciones1, observaciones2, emailCreado, ct_frecuenciaCardiaca, ct_frecuenciaRespiratoria, ct_temperatura, ct_presionArterial], function (err, result) {
             if (err) {
                 console.log(`ERROR al crear la nota::: ${err.message}`);
@@ -73,7 +73,7 @@ router.post('/add', async function (req, res) {
          // Extraemos los datos de la nota
          const {planta, habitacion, cama, fechaActualizacion, emailCreado} = req.body;
         // Realizamos la consulta
-        const sqlQuery = 'DELETE FROM tfg.Nota WHERE planta = ? AND habitacion = ? AND cama = ? AND fechaActualizacion = ? AND emailCreado = ?';
+        const sqlQuery = 'DELETE FROM Nota WHERE planta = ? AND habitacion = ? AND cama = ? AND fechaActualizacion = ? AND emailCreado = ?';
         pool.query(sqlQuery, [planta, habitacion, cama, fechaActualizacion, emailCreado], function (err, result) {
             if (err){
                 throw err;

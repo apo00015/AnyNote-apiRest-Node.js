@@ -14,7 +14,7 @@ router.get('/:emailUser', async function (req, res) {
         const sqlQuery =
             'SELECT n.planta, n.habitacion, n.cama, n.fechaActualizacion, n.observaciones1, n.observaciones2, ' +
             'n.ct_frecuenciaCardiaca, n.ct_frecuenciaRespiratoria, n.ct_temperatura, n.ct_presionArterial, n.emailCreado ' +
-            'FROM tfg.Nota n, tfg.UsuarioNotaCrossRef u_n ' +
+            'FROM Nota n, UsuarioNotaCrossRef u_n ' +
             'WHERE u_n.email = ? ' +
             'AND  u_n.planta = n.planta ' +
             'AND u_n.habitacion = n.habitacion ' +
@@ -53,7 +53,7 @@ router.get('/:emailUser/:offset', async function (req, res) {
         const sqlQuery =
             'SELECT n.planta, n.habitacion, n.cama, n.fechaActualizacion, n.observaciones1, n.observaciones2, ' +
             'n.ct_frecuenciaCardiaca, n.ct_frecuenciaRespiratoria, n.ct_temperatura, n.ct_presionArterial, n.emailCreado ' +
-            'FROM tfg.Nota n, tfg.UsuarioNotaCrossRef u_n ' +
+            'FROM Nota n, UsuarioNotaCrossRef u_n ' +
             'WHERE u_n.email = ? ' +
             'AND u_n.planta = n.planta ' +
             'AND u_n.habitacion = n.habitacion ' +
@@ -94,7 +94,7 @@ router.get('/:emailUser/buscar/:planta/:habitacion/:cama', async function (req, 
         // Creamos la consulta en función de los parámetros recibidos
         sqlQuery = 'SELECT n.planta, n.habitacion, n.cama, n.fechaActualizacion, n.observaciones1, n.observaciones2, ' +
             'n.ct_frecuenciaCardiaca, n.ct_frecuenciaRespiratoria, n.ct_temperatura, n.ct_presionArterial, n.emailCreado ' +
-            'FROM tfg.Nota n, tfg.UsuarioNotaCrossRef u_n ' +
+            'FROM Nota n, UsuarioNotaCrossRef u_n ' +
             'WHERE u_n.email = ? ' +
             'AND u_n.planta = n.planta ' +
             'AND u_n.planta = ? ' +
@@ -136,7 +136,7 @@ router.get('/:emailUser/buscar/:planta/:habitacion', async function (req, res) {
         // Creamos la consulta en función de los parámetros recibidos
         sqlQuery = 'SELECT n.planta, n.habitacion, n.cama, n.fechaActualizacion, n.observaciones1, n.observaciones2, ' +
             'n.ct_frecuenciaCardiaca, n.ct_frecuenciaRespiratoria, n.ct_temperatura, n.ct_presionArterial, n.emailCreado ' +
-            'FROM tfg.Nota n, tfg.UsuarioNotaCrossRef u_n ' +
+            'FROM Nota n, UsuarioNotaCrossRef u_n ' +
             'WHERE u_n.email = ? ' +
             'AND u_n.planta = n.planta ' +
             'AND u_n.planta = ? ' +
@@ -179,7 +179,7 @@ router.get('/:emailUser/buscar/:planta', async function (req, res) {
 
         sqlQuery = 'SELECT n.planta, n.habitacion, n.cama, n.fechaActualizacion, n.observaciones1, n.observaciones2, ' +
             'n.ct_frecuenciaCardiaca, n.ct_frecuenciaRespiratoria, n.ct_temperatura, n.ct_presionArterial, n.emailCreado ' +
-            'FROM tfg.Nota n, tfg.UsuarioNotaCrossRef u_n ' +
+            'FROM Nota n, UsuarioNotaCrossRef u_n ' +
             'WHERE u_n.email = ? ' +
             'AND u_n.planta = n.planta ' +
             'AND u_n.planta = ? ' +
@@ -218,7 +218,7 @@ router.post('/add', async function (req, res) {
         const { emailUser, planta, habitacion, cama, fechaActualizacion, emailUserCreado } = req.body;
 
         // Realizamos la consulta
-        const sqlQuery = 'INSERT INTO tfg.UsuarioNotaCrossRef (email, planta, habitacion, cama, fechaActualizacion, emailCreado) VALUES (?,?,?,?,?,?)';
+        const sqlQuery = 'INSERT INTO UsuarioNotaCrossRef (email, planta, habitacion, cama, fechaActualizacion, emailCreado) VALUES (?,?,?,?,?,?)';
         pool.query(sqlQuery, [emailUser, planta, habitacion, cama, fechaActualizacion, emailUserCreado], function (err, result) {
             if (err) {
                 console.log(`ERROR al crear la relacion ${emailUser} y (${planta} - ${habitacion} - ${cama} - ${fechaActualizacion} - ${emailUserCreado})`);
@@ -248,7 +248,7 @@ router.delete('/eliminar', async function (req, res) {
         const { email, planta, habitacion, cama, fechaActualizacion, emailCreado } = req.body;
 
         // Realizamos la consulta
-        const sqlQuery = 'DELETE FROM tfg.UsuarioNotaCrossRef WHERE email = ? AND planta = ? AND habitacion = ? AND cama = ? AND fechaActualizacion = ? AND emailCreado = ?';
+        const sqlQuery = 'DELETE FROM UsuarioNotaCrossRef WHERE email = ? AND planta = ? AND habitacion = ? AND cama = ? AND fechaActualizacion = ? AND emailCreado = ?';
         pool.query(sqlQuery, [email, planta, habitacion, cama, fechaActualizacion, emailCreado], function (err, result) {
             if (err) {
                 throw err;
