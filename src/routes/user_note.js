@@ -101,7 +101,7 @@ router.get('/:emailUser/buscar/:planta/:habitacion/:cama', async function (req, 
             'AND u_n.habitacion = n.habitacion ' +
             'AND u_n.habitacion = ? ' +
             'AND u_n.cama = n.cama ' +
-            'AND u_n.cama = ?' + 
+            'AND u_n.cama = ? ' + 
             'AND u_n.fechaActualizacion = n.fechaActualizacion ' +
             'AND u_n.emailCreado = n.emailCreado';
 
@@ -198,6 +198,7 @@ router.get('/:emailUser/buscar/:planta', async function (req, res) {
                 res.status(404).send('Recurso no encontrado')
                 console.log(`Vacio`);
             } else {
+                console.log(result)
                 res.status(200).json(result);
             }
 
@@ -267,6 +268,52 @@ router.delete('/eliminar', async function (req, res) {
     }
 });
 
+/**
+ * Método Put para obtener los usuarios compartidos
+ */
+ router.put('/usuariosCompartidos', async function(req,res){
 
+    console.log(`---------------Se quiere obtener los usuarios compartidos:---------------`);
+    try {
+        // Obtenemos el body
+        console.log(req.body)
+         // Extraemos los datos de la nota
+         const {planta, habitacion, cama, fechaActualizacion, emailCreado} = req.body;
+        // Realizamos la consulta
+        var sqlQuery
+        // Creamos la consulta en función de los parámetros recibidos
+
+        sqlQuery = 'SELECT u_n.email ' +
+            'FROM Nota n, UsuarioNotaCrossRef u_n ' +
+            'WHERE u_n.planta = n.planta ' +
+            'AND u_n.planta = n.planta ' +
+            'AND u_n.planta = ? ' +
+            'AND u_n.habitacion = n.habitacion ' +
+            'AND u_n.habitacion = ? '+ 
+            'AND u_n.cama = n.cama ' +
+            'AND u_n.cama = ? '
+            'AND u_n.fechaActualizacion = n.fechaActualizacion ' +
+            'AND u_n.fechaActualizacion = ? '
+            'AND u_n.emailCreado = n.emailCreado' +
+            'AND u_n.emailCreado = ? ';
+
+        pool.query(sqlQuery, [planta, habitacion, cama, fechaActualizacion, emailCreado], function (err, result) {
+            if (err){
+                throw err;
+            }
+            if (Object.keys(result).length === 0) {
+                res.status(404).send('La nota no está compartida por nadie')
+                console.log(`Vacio`);
+            } else {
+                console.log(result)
+                res.status(200).json(result);
+            }
+            
+          });
+        
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+});
 
 module.exports = router; // Exportamos el router para poder utilizar las rutas definidas en la clase server

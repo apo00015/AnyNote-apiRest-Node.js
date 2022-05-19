@@ -93,5 +93,36 @@ router.post('/add', async function (req, res) {
     }
 });
 
+/**
+ * Método Put para compartir una nota
+ */
+ router.put('/compartir', async function(req,res){
+
+    console.log(`Se quiere realizar PUT de una nota:`);
+    try {
+        // Obtenemos el body
+        console.log(req.body)
+         // Extraemos los datos de la nota
+         const {planta, habitacion, cama, fechaActualizacion, emailCreado, compartida} = req.body;
+        // Realizamos la consulta
+        const sqlQuery = 'UPDATE Nota SET compartida = ? WHERE planta = ? AND habitacion = ? AND cama = ? AND fechaActualizacion = ? AND emailCreado = ?';
+        pool.query(sqlQuery, [compartida, planta, habitacion, cama, fechaActualizacion, emailCreado], function (err, result) {
+            if (err){
+                throw err;
+            }
+            if(result.affectedRows > 0){
+                res.status(200).json(result);
+                console.log(`Se ha compartido con éxito la nota`);
+            }else{
+                res.status(200).send(`No hay ningúna nota con esos datos`)
+                console.log(`La nota no existe`);
+            }
+            
+          });
+        
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+});
 
 module.exports = router; // Exportamos el router para poder utilizar las rutas definidas en la clase server
