@@ -245,11 +245,11 @@ router.delete('/eliminar', async function (req, res) {
     console.log(`Se quiere realizar DELETE de una relacion:`);
     try {
         // Obtenemos el body
-        const { email, planta, habitacion, cama, fechaActualizacion, emailCreado } = req.body;
+        const { emailUser, planta, habitacion, cama, fechaActualizacion, emailUserCreado } = req.body;
 
         // Realizamos la consulta
         const sqlQuery = 'DELETE FROM UsuarioNotaCrossRef WHERE email = ? AND planta = ? AND habitacion = ? AND cama = ? AND fechaActualizacion = ? AND emailCreado = ?';
-        pool.query(sqlQuery, [email, planta, habitacion, cama, fechaActualizacion, emailCreado], function (err, result) {
+        pool.query(sqlQuery, [emailUser, planta, habitacion, cama, fechaActualizacion, emailUserCreado], function (err, result) {
             if (err) {
                 throw err;
             }
