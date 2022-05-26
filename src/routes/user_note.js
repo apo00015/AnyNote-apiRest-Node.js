@@ -61,7 +61,7 @@ router.get('/:emailUser/:offset', async function (req, res) {
             'AND u_n.fechaActualizacion = n.fechaActualizacion ' +
             'AND u_n.emailCreado = n.emailCreado ' +
             'ORDER BY n.fechaActualizacion DESC ' +
-            'LIMIT 5 OFFSET ? ';
+            'LIMIT 5 OFFSET ?';
 
         pool.query(sqlQuery, [req.params.emailUser, parseInt(req.params.offset)], function (err, result, fields) {
             if (err)
@@ -229,7 +229,6 @@ router.post('/add', async function (req, res) {
                 console.log(`No hay ningún eror, se ha creado la relación entre ${emailUser} y (${planta} - ${habitacion} - ${cama} - ${fechaActualizacion} - ${emailUserCreado})`);
                 res.status(200).json(result); // Devolvemos el identificador del usuario
             }
-
         });
 
     } catch (err) {
@@ -286,7 +285,6 @@ router.delete('/eliminar', async function (req, res) {
         sqlQuery = 'SELECT u_n.email ' +
             'FROM Nota n, UsuarioNotaCrossRef u_n ' +
             'WHERE u_n.planta = n.planta ' +
-            'AND u_n.planta = n.planta ' +
             'AND u_n.planta = ? ' +
             'AND u_n.habitacion = n.habitacion ' +
             'AND u_n.habitacion = ? '+ 
@@ -294,7 +292,7 @@ router.delete('/eliminar', async function (req, res) {
             'AND u_n.cama = ? '
             'AND u_n.fechaActualizacion = n.fechaActualizacion ' +
             'AND u_n.fechaActualizacion = ? '
-            'AND u_n.emailCreado = n.emailCreado' +
+            'AND u_n.emailCreado = n.emailCreado ' +
             'AND u_n.emailCreado = ? ';
 
         pool.query(sqlQuery, [planta, habitacion, cama, fechaActualizacion, emailCreado], function (err, result) {
