@@ -102,13 +102,12 @@ router.post('/register', async function(req,res) {
             }
                 
             console.log(result);
-            if(result.changedRows > 0){
+            if(result.affectedRows > 0){
                 console.log(`Se ha modificado con éxito:`);
                 res.status(200).json(result); // Devolvemos el identificador del usuario
             }else{
                 res.status(404).send("No se han realizado los cambios");
             }
-            
         });
 
     } catch (error) {
