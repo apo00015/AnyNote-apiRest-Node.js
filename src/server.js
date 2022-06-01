@@ -1,9 +1,9 @@
+const path = require('path');
 const express = require('express'); // Módulo para crear una conexión
 const dotenv = require('dotenv');
 // Requerimos los módulos necesarios para crear la página
-const { engine } = require('express-handlebars');
+const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
-
 dotenv.config({path: '.env-local'});
 
 const PORT = process.env.PORT || '3001';
@@ -21,17 +21,36 @@ app.use(express.urlencoded({extended:false}));
 app.use(bodyParser.urlencoded({
     extended: true
   }));
-  app.use(bodyParser.json());
-app.set('views', __dirname + '/views');
-app.engine('.hbs', engine({
-  extname: '.hbs',
-}));
+app.use(bodyParser.json());
+
+// Vistas
+app.set("views", path.join(__dirname, "views"));
+app.engine(
+  ".hbs",
+  exphbs.engine({
+    defaultLayout: "main",
+    layoutsDir: path.join(app.get("views"), "layouts"),
+    partialsDir: path.join(app.get("views"), "partials"),
+    extname: ".hbs",
+    helpers: require("./lib/handlebars"),
+  })
+);
+app.set("view engine", ".hbs");
+
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
+// Vaiables globales
+
+// Public
+app.use(express.static(path.join(__dirname, "public")));
+
 /**
  * Rutas de nuestra API REST
  */
 app.get('/', (request, response) => {
-    //response.render('index');
-    response.status(200).send("Pagina inicial")
+    response.render('index');
+    
 })
 
 const userRouter = require('./routes/user');
@@ -46,4 +65,3 @@ app.use('/userNote',userNoteRouter)
 app.listen(PORT, () => {
     console.log(`Listening for requests on port ${PORT}`)
 })
-
