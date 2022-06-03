@@ -53,8 +53,6 @@ router.post('/add', async function (req, res) {
            
         });
 
-
-
     } catch (err) {
         console.log("Ha ocurrido un error*******************************************************************")
         res.status(400).send(err.message);
@@ -85,9 +83,7 @@ router.post('/add', async function (req, res) {
                 res.status(200).send(`No hay ningúna nota con esos datos`)
                 console.log(`La nota no existe`);
             }
-            
           });
-        
     } catch (error) {
         res.status(400).send(error.message);
     }

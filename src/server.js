@@ -61,6 +61,9 @@ app.use('/user',userRouter);
 app.use('/note',notasRouter);
 app.use('/userNote',userNoteRouter)
 
+// Routes
+//const rutasClienteWeb = require('./routes/clienteWeb')
+//app.use(rutasClienteWeb);
 /**Servidor escuchando */
 app.listen(PORT, () => {
     console.log(`Listening for requests on port ${PORT}`)

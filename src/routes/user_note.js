@@ -61,7 +61,7 @@ router.get('/:emailUser/:offset', async function (req, res) {
             'AND u_n.fechaActualizacion = n.fechaActualizacion ' +
             'AND u_n.emailCreado = n.emailCreado ' +
             'ORDER BY n.fechaActualizacion DESC ' +
-            'LIMIT 5 OFFSET ?';
+            'LIMIT 10 OFFSET ?';
 
         pool.query(sqlQuery, [req.params.emailUser, parseInt(req.params.offset)], function (err, result, fields) {
             if (err)
@@ -279,22 +279,21 @@ router.delete('/eliminar', async function (req, res) {
          // Extraemos los datos de la nota
          const {planta, habitacion, cama, fechaActualizacion, emailCreado} = req.body;
         // Realizamos la consulta
-        var sqlQuery
-        // Creamos la consulta en función de los parámetros recibidos
 
-        sqlQuery = 'SELECT u_n.email ' +
-            'FROM Nota n, UsuarioNotaCrossRef u_n ' +
-            'WHERE u_n.planta = n.planta ' +
-            'AND u_n.planta = ? ' +
+            const sqlQuery = 
+            'SELECT u_n.email ' +
+            'FROM Nota n ' +
+            'JOIN UsuarioNotaCrossRef u_n ON u_n.planta = n.planta ' +
             'AND u_n.habitacion = n.habitacion ' +
-            'AND u_n.habitacion = ? '+ 
             'AND u_n.cama = n.cama ' +
-            'AND u_n.cama = ? '
             'AND u_n.fechaActualizacion = n.fechaActualizacion ' +
-            'AND u_n.fechaActualizacion = ? '
             'AND u_n.emailCreado = n.emailCreado ' +
+            'WHERE n.planta = ? ' +
+            'AND u_n.habitacion = ? '+ 
+            'AND u_n.cama = ? ' +
+            'AND u_n.fechaActualizacion = ? ' +
             'AND u_n.emailCreado = ? ';
-
+            
         pool.query(sqlQuery, [planta, habitacion, cama, fechaActualizacion, emailCreado], function (err, result) {
             if (err){
                 throw err;
