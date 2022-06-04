@@ -29,6 +29,7 @@ router.get('/:email', async function(req,res){
     }
 });
 
+
 /**
  * Método POST para insertar un usuario
  */
@@ -110,6 +111,41 @@ router.post('/register', async function(req,res) {
             }
         });
 
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+})
+
+/**
+ * Método PUT para comprobar si el usuario está sincronizado con la base de datos
+ */
+ router.put('/comprobarSincronizacion', async function(req,res) {
+    console.log(`Se quiere Comprobar el  usuario con email: ${req.params.email}`);
+    try {
+        // Extraemos los datos del body, los cuales serán los nuevos email y password
+        const {email, nombre,fechaActualizado} = req.body;
+        console.log(`El email recibido es: ${email}  y la última fecha de actualización es del: ${fechaActualizado}`);
+
+        // Obtenemos el email del servidor
+        const sqlQuery = 'SELECT * FROM Usuario WHERE email=?';
+        pool.query(sqlQuery, [req.params.email], function (err, result, fields) {
+            if (err) 
+                throw err;
+            console.log(result);
+            // Comprobamos si el resultado está vacio o no
+            if(Object.keys(result).length === 0){
+                res.status(404).send('Recurso no encontrado')
+                console.log(`Vacio`);
+            }else{
+                // Comprobamos si la fecha es la misma
+                if(result.fechaActualizado == fechaActualizado){
+                    res.status(200).json(true);
+                }else{
+                    res.status(200).json(false);
+                } 
+            }
+          });
+        
     } catch (error) {
         res.status(400).send(error.message);
     }
