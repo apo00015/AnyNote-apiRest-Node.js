@@ -49,8 +49,11 @@ app.use(express.static(path.join(__dirname, "public")));
  * Rutas de nuestra API REST
  */
 app.get('/', (request, response) => {
-    response.render('index');
-    
+    response.render('index'); 
+})
+
+app.get('/signin', (request, response) => {
+  response.render('auth/signin');
 })
 
 const userRouter = require('./routes/user');

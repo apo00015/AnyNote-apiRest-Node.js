@@ -6,62 +6,110 @@
     <a class="navbar-brand" href="/">
       AnyNote
     </a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-toggle="collapse"
-      data-target="#navbarNav"
-      aria-controls="navbarNav"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
         {{#if user}}
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle"
-              href="#"
-              id="navbarDropdown"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              links
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="/links">All Links</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="/links/add">Add A Link</a>
-            </div>
-          </li>
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle"
-              href="#"
-              id="navbarDropdown"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              {{user.username}}
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="/profile">Profile</a></li>
-              <li><a class="dropdown-item" href="/logout">Logout</a></li>
-            </ul>
-          </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            links
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/links">All Links</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="/links/add">Add A Link</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            {{user.username}}
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="/profile">Profile</a></li>
+            <li><a class="dropdown-item" href="/logout">Logout</a></li>
+          </ul>
+        </li>
         {{else}}
-          <li class="nav-item">
-            <a class="nav-link" href="/signin">Iniciar Sesión</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/signup">Registrarse</a>
-          </li>
+        <li class="nav-item">
+          <button onclick="loginWithGoogle()">Iniciar Sesión</a>
+        </li>
         {{/if}}
       </ul>
     </div>
   </div>
 </nav>
+<!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+
+
+<!-- Add Firebase products that you want to use -->
+<script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+
+
+
+<script>
+
+  //iniciar con Google
+  function loginWithGoogle() {
+    //variables
+    var firebaseConfig = {
+      apiKey: "AIzaSyDdE5H3eoVeOLmOQStH1pR1mDUKSmoBIHI",
+      authDomain: "loginwithoauth2-bcb89.firebaseapp.com",
+      projectId: "loginwithoauth2-bcb89",
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    var provider = new firebase.auth.GoogleAuthProvider();
+    provider.addScope('profile');
+    provider.addScope('email');
+    firebase.auth().signInWithPopup(provider).then(function (result) {
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      var token = result.credential.accessToken;
+      // The signed-in user info.
+      var user = result.user;
+
+      console.log(user.displayName);
+      updateUser(user);
+      // ...
+    }).catch(function (error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // The email of the user's account used.
+      var email = error.email;
+      // The firebase.auth.AuthCredential type that was used.
+      var credential = error.credential;
+      // ...
+
+      console.log(errorMessage);
+    });
+  }
+
+  //agregar datos del usuario
+  function updateUser(user) {
+    user_name_h1.innerHTML = "Hola, " + user.displayName;
+    user_image.src = user.photoURL;
+
+    login_btn.style.display = "none";
+    logout_btn.style.display = "inline-block";
+  }
+
+  function logout() {
+    firebase.auth().signOut().then(function () {
+      user_name_h1.innerHTML = "Acceso";
+      login_btn.style.display = "inline-block";
+      logout_btn.style.display = "none";
+
+    }).catch(function (error) {
+      // An error happened.
+    });
+
+  }
+</script>
