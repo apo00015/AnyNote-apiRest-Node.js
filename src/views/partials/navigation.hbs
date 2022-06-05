@@ -36,7 +36,18 @@
         </li>
         {{else}}
         <li class="nav-item">
-          <button onclick="loginWithGoogle()">Iniciar Sesión</a>
+          <button id="login_btn" class="btn btn-primary btn-block" onclick="loginWithGoogle()"
+            style="background-color: white; color: black;">
+            <img src="img/google.png" height="24" width="24" />
+            Continuar con Google
+          </button>
+        </li>
+        <li class="nav-item">
+          <button id="logout_btn" class="btn btn-primary btn-block"
+            style="background-color: white; color: black; display: none;">
+            <img src="img/google.png" height="24" width="24" />
+            Cerrar sesión
+          </button>
         </li>
         {{/if}}
       </ul>
@@ -51,11 +62,11 @@
 <script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
 
 
-
 <script>
 
   //iniciar con Google
   function loginWithGoogle() {
+    
     //variables
     var firebaseConfig = {
       apiKey: "AIzaSyDdE5H3eoVeOLmOQStH1pR1mDUKSmoBIHI",
@@ -75,8 +86,13 @@
       // The signed-in user info.
       var user = result.user;
 
-      console.log(user.displayName);
-      updateUser(user);
+      console.log(user.email);
+      console.log(correoUsuario);
+      //updateUser(user);
+      correoUsuario = user.email
+      console.log(correoUsuario);
+      const ruta = "/notas/" + user.email
+      location.href = ruta;
       // ...
     }).catch(function (error) {
       // Handle Errors here.
@@ -87,16 +103,16 @@
       // The firebase.auth.AuthCredential type that was used.
       var credential = error.credential;
       // ...
-
+      
       console.log(errorMessage);
     });
   }
 
   //agregar datos del usuario
   function updateUser(user) {
-    user_name_h1.innerHTML = "Hola, " + user.displayName;
-    user_image.src = user.photoURL;
-
+    var login_btn = document.getElementById("login_btn");
+    var logout_btn = document.getElementById("logout_btn");
+    
     login_btn.style.display = "none";
     logout_btn.style.display = "inline-block";
   }

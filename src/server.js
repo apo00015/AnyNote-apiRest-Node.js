@@ -52,17 +52,15 @@ app.get('/', (request, response) => {
     response.render('index'); 
 })
 
-app.get('/signin', (request, response) => {
-  response.render('auth/signin');
-})
-
 const userRouter = require('./routes/user');
 const notasRouter = require('./routes/note')
 const userNoteRouter = require('./routes/user_note')
+const clienteWebRouter = require('./routes/clienteWeb')
 
 app.use('/user',userRouter);
 app.use('/note',notasRouter);
 app.use('/userNote',userNoteRouter)
+app.use('/notas',clienteWebRouter)
 
 // Routes
 //const rutasClienteWeb = require('./routes/clienteWeb')

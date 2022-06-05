@@ -1,0 +1,30 @@
+<div class="container p-4" >
+  <div class="row">
+    {{#each notas}}
+      <div class="col-md-3 p-2">
+        <div class="card text-center bg-dark text-light">
+          <div class="card-body">
+            
+              <p style="font-size: 110%;">
+                Planta:{{planta}} Habitacion: {{habitacion}} Cama: {{cama}}
+              </p>
+            
+            <p class="m-2">{{observaciones1}}</p>
+            <p class="text-muted">
+              {{fechaActualizacion}}
+            </p>
+            <a class="btn btn-primary" href="/notes/verNota/{{id}}">
+              Ver Nota
+            </a>
+          </div>
+        </div>
+      </div>
+    {{else}}
+      <div class="col-md-4 mx-auto">
+        <div class="card card-body text-center bg-dark text-light">
+          <p>El usuario {{email}} no tiene ninguna nota</p>
+        </div>
+      </div>
+    {{/each}}
+  </div>
+</div>
