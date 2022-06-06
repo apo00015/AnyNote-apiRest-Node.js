@@ -1,8 +1,20 @@
 body {
-  background: #141518;
+  background: #2196F3;
+  color: rgb(0, 0, 0);
   font-family: "Oswald", sans-serif;
   overflow: hidden;
   height: 100vh;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #DDD;
 }
 
 .index {
@@ -11,7 +23,7 @@ body {
 }
 
 .navbar {
-  background: black !important;
+  background: #197BCA;
 }
 
 .navbar-logo img{

@@ -1,15 +1,19 @@
 const express = require('express'); // Framework para crear un servidor http
 const router = express.Router();    // Módulo para agrupar rutas
 const pool = require('../helpers/database');
-var correoUsuario = require("../Utils/util")
+const { initializeApp } = require('firebase/app');
+const { getAuth, signInWithPopup, GoogleAuthProvider } = require('firebase/auth');
+
 /**
  * Método GET para obtener una nota, pasados sus claves primarias
  */
- router.get('/:emailUser', async function (req, res) {
+router.get('/:email', async function (req, res) {
+    const app2 = express();
+    console.log(`Se quiere realizar un GET de para obtener todas las notas que tiene acceso un usuario:`);
 
-    console.log(`Se quiere realizar un GET de para obtener todas las notas que tiene acceso un usuario: ${correoUsuario}`)
+
+    // Realizamoos la consulta
     try {
-        // Obtenemos los parámteros del body
         const sqlQuery =
             'SELECT n.planta, n.habitacion, n.cama, n.fechaActualizacion, n.observaciones1, n.observaciones2, ' +
             'n.ct_frecuenciaCardiaca, n.ct_frecuenciaRespiratoria, n.ct_temperatura, n.ct_presionArterial, n.emailCreado ' +
@@ -22,7 +26,7 @@ var correoUsuario = require("../Utils/util")
             'AND u_n.emailCreado = n.emailCreado ' +
             'ORDER BY n.fechaActualizacion ASC';
 
-        pool.query(sqlQuery, [req.params.emailUser], function (err, result, fields) {
+        pool.query(sqlQuery, [req.params.email], function (err, result, fields) {
             if (err)
                 throw err;
             console.log(result);
@@ -30,12 +34,13 @@ var correoUsuario = require("../Utils/util")
             if (Object.keys(result).length === 0) {
                 res.render("notes/list", { notas: result });
             } else {
-                res.render("notes/list", { notas: result });
+                res.render("notes/list", { notas: result ,logueado: true});
             }
         });
-    } catch (error) {
-        res.status(400).send(error.message);
+    } catch (err) {
+        res.status(400).send(err.message);
     }
+
 });
 
 module.exports = router; // Exportamos el router para poder utilizar las rutas definidas en la clase server
