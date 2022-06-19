@@ -6,29 +6,22 @@ const pool = require('../helpers/database');
  * Método GET para obtener usuarios dado un email
  */
 router.get('/:email', async function(req,res){
-
-    console.log(`Se quiere realizar un GET del usuario con email: ${req.params.email}`)
     try {
         const sqlQuery = 'SELECT * FROM Usuario WHERE email=?';
         pool.query(sqlQuery, [req.params.email], function (err, result, fields) {
             if (err) 
                 throw err;
-            console.log(result);
             // Comprobamos si el resultado está vacio o no
             if(Object.keys(result).length === 0){
                 res.status(404).send('Recurso no encontrado')
-                console.log(`Vacio`);
             }else{
                 res.status(200).json(result);
-            }
-            
+            }    
           });
-        
     } catch (error) {
         res.status(400).send(error.message);
     }
 });
-
 
 /**
  * Método POST para insertar un usuario
@@ -62,8 +55,6 @@ router.post('/register', async function(req,res) {
  * Método DELETE para eliminar un usuario pasado un email
  */
  router.delete('/eliminar/:email', async function(req,res){
-
-    console.log(`Se quiere realizar DELETE del usuario con email: ${req.params.email}`);
     try {
         // Realizamos la consulta
         const sqlQuery = 'DELETE FROM Usuario WHERE email = ?';
@@ -73,13 +64,10 @@ router.post('/register', async function(req,res) {
             }
             if(result.affectedRows > 0){
                 res.status(200).json(result);
-                console.log(`Se ha borrado con éxito el usuario con email: ${req.params.email}`);
             }else{
                 res.status(404).send(`No hay ningún usuario con el email: ${req.params.email}`)
             }
-            
           });
-        
     } catch (error) {
         res.status(400).send(error.message);
     }
@@ -89,11 +77,9 @@ router.post('/register', async function(req,res) {
  * Método PUT para actualizar un usuario de la base de datos
  */
  router.put('/update/:email', async function(req,res) {
-    console.log(`Se quiere realizar un PUT del usuario con id: ${req.params.email}`);
     try {
         // Extraemos los datos del body, los cuales serán los nuevos email y password
         const {email, nombre,fechaActualizado} = req.body;
-        console.log(`El email recibido es: ${email}  y la última fecha de actualización es del: ${fechaActualizado}`);
 
         // Realizamos la consulta
         const sqlQuery = 'UPDATE Usuario SET fechaActualizado = ? WHERE email = ?';
@@ -102,15 +88,12 @@ router.post('/register', async function(req,res) {
                 throw err;
             }
                 
-            console.log(result);
             if(result.affectedRows > 0){
-                console.log(`Se ha modificado con éxito:`);
                 res.status(200).json(true);
             }else{
                 res.status(404).json(false);
             }
         });
-
     } catch (error) {
         res.status(400).send(error.message);
     }
@@ -120,22 +103,18 @@ router.post('/register', async function(req,res) {
  * Método PUT para comprobar si el usuario está sincronizado con la base de datos
  */
  router.put('/comprobarSincronizacion', async function(req,res) {
-    console.log(`Se quiere Comprobar el  usuario con email: ${req.params.email}`);
     try {
         // Extraemos los datos del body, los cuales serán los nuevos email y password
         const {email, nombre,fechaActualizado} = req.body;
-        console.log(`El email recibido es: ${email}  y la última fecha de actualización es del: ${fechaActualizado}`);
 
         // Obtenemos el email del servidor
         const sqlQuery = 'SELECT * FROM Usuario WHERE email=?';
-        pool.query(sqlQuery, [req.params.email], function (err, result, fields) {
+        pool.query(sqlQuery, [email], function (err, result, fields) {
             if (err) 
                 throw err;
-            console.log(result);
             // Comprobamos si el resultado está vacio o no
             if(Object.keys(result).length === 0){
                 res.status(404).send('Recurso no encontrado')
-                console.log(`Vacio`);
             }else{
                 // Comprobamos si la fecha es la misma
                 if(result.fechaActualizado == fechaActualizado){
@@ -145,7 +124,6 @@ router.post('/register', async function(req,res) {
                 } 
             }
           });
-        
     } catch (error) {
         res.status(400).send(error.message);
     }

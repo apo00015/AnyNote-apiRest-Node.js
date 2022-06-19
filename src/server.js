@@ -10,12 +10,9 @@ const PORT = process.env.PORT || '3001';
 
 const app = express();
 
-//const bodyParser = require('body-parser');
-
 /**
  * Middleware
  */
- //app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 app.use(bodyParser.urlencoded({
@@ -23,7 +20,7 @@ app.use(bodyParser.urlencoded({
   }));
 app.use(bodyParser.json());
 
-// Vistas
+// Vistas que utilizaremos en la aplicación
 app.set("views", path.join(__dirname, "views"));
 app.engine(
   ".hbs",
@@ -39,12 +36,10 @@ app.set("view engine", ".hbs");
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-// Public
+// Carpeta publica de la aplicación que contiene los estilos CSS y las imágenes
 app.use(express.static(path.join(__dirname, "public")));
 
-/**
- * Rutas de nuestra API REST
- */
+// Rutas accesibles de nuestra API REST
 app.get('/', (request, response) => {
     response.render('index'); 
 })
@@ -59,10 +54,7 @@ app.use('/note',notasRouter);
 app.use('/userNote',userNoteRouter)
 app.use('/notas',clienteWebRouter)
 
-// Routes
-//const rutasClienteWeb = require('./routes/clienteWeb')
-//app.use(rutasClienteWeb);
-/**Servidor escuchando */
+// Servidor escuchando
 app.listen(PORT, () => {
-    console.log(`Listening for requests on port ${PORT}`)
+    console.log(`Aplicación escuchando en el puerto: ${PORT}`)
 })

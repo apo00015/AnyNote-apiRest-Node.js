@@ -10,8 +10,9 @@ const pool = mysql.createPool({
 });
 
 
-
-// Conectamos con la base de datos y comprobamos si hay errores
+/**
+ * Función para conectar el API-REST con la base de datos
+ */
 pool.getConnection((err, connection) => {
     if(err){
         if (err.code === 'PROTOCOL_CONNECTION_LOST'){
@@ -24,8 +25,8 @@ pool.getConnection((err, connection) => {
             console.error('Database connection was refused');
         }
     }
-    console.log("conexion exitosa")
-    if(connection) connection.release();
+    if(connection) 
+        connection.release();
 
     return;
 });

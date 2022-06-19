@@ -8,10 +8,6 @@ const { getAuth, signInWithPopup, GoogleAuthProvider } = require('firebase/auth'
  * Método GET para obtener una nota, pasados sus claves primarias
  */
 router.get('/:email', async function (req, res) {
-    const app2 = express();
-    console.log(`Se quiere realizar un GET de para obtener todas las notas que tiene acceso un usuario:`);
-
-
     // Realizamoos la consulta
     try {
         const sqlQuery =
@@ -29,7 +25,6 @@ router.get('/:email', async function (req, res) {
         pool.query(sqlQuery, [req.params.email], function (err, result, fields) {
             if (err)
                 throw err;
-            console.log(result);
             // Comprobamos si el resultado está vacio o no
             if (Object.keys(result).length === 0) {
                 res.render("notes/list", { notas: result });
@@ -40,7 +35,6 @@ router.get('/:email', async function (req, res) {
     } catch (err) {
         res.status(400).send(err.message);
     }
-
 });
 
 module.exports = router; // Exportamos el router para poder utilizar las rutas definidas en la clase server
