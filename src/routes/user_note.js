@@ -10,7 +10,7 @@ router.get('/:emailUser', async function (req, res) {
         // Obtenemos los parámteros del body
         const sqlQuery =
             'SELECT n.planta, n.habitacion, n.cama, n.fechaActualizacion, n.observaciones1, n.observaciones2, ' +
-            'n.ct_frecuenciaCardiaca, n.ct_frecuenciaRespiratoria, n.ct_temperatura, n.ct_presionArterial, n.emailCreado ' +
+            'n.ct_frecuenciaCardiaca, n.ct_frecuenciaRespiratoria, n.ct_temperatura, n.ct_presionArterial, n.ct_presionArterial2, n.emailCreado ' +
             'FROM Nota n, UsuarioNotaCrossRef u_n ' +
             'WHERE u_n.email = ? ' +
             'AND  u_n.planta = n.planta ' +
@@ -43,7 +43,7 @@ router.get('/:emailUser/:offset', async function (req, res) {
         // Obtenemos los parámteros del body
         const sqlQuery =
             'SELECT n.planta, n.habitacion, n.cama, n.fechaActualizacion, n.observaciones1, n.observaciones2, ' +
-            'n.ct_frecuenciaCardiaca, n.ct_frecuenciaRespiratoria, n.ct_temperatura, n.ct_presionArterial, n.emailCreado ' +
+            'n.ct_frecuenciaCardiaca, n.ct_frecuenciaRespiratoria, n.ct_temperatura, n.ct_presionArterial, n.ct_presionArterial2, n.emailCreado ' +
             'FROM Nota n, UsuarioNotaCrossRef u_n ' +
             'WHERE u_n.email = ? ' +
             'AND u_n.planta = n.planta ' +
@@ -77,7 +77,7 @@ router.get('/:emailUser/buscar/:planta/:habitacion/:cama', async function (req, 
         var sqlQuery
         // Creamos la consulta en función de los parámetros recibidos
         sqlQuery = 'SELECT n.planta, n.habitacion, n.cama, n.fechaActualizacion, n.observaciones1, n.observaciones2, ' +
-            'n.ct_frecuenciaCardiaca, n.ct_frecuenciaRespiratoria, n.ct_temperatura, n.ct_presionArterial, n.emailCreado ' +
+            'n.ct_frecuenciaCardiaca, n.ct_frecuenciaRespiratoria, n.ct_temperatura, n.ct_presionArterial, n.ct_presionArterial2, n.emailCreado ' +
             'FROM Nota n, UsuarioNotaCrossRef u_n ' +
             'WHERE u_n.email = ? ' +
             'AND u_n.planta = n.planta ' +
@@ -112,7 +112,7 @@ router.get('/:emailUser/buscar/:planta/:habitacion', async function (req, res) {
         var sqlQuery
         // Creamos la consulta en función de los parámetros recibidos
         sqlQuery = 'SELECT n.planta, n.habitacion, n.cama, n.fechaActualizacion, n.observaciones1, n.observaciones2, ' +
-            'n.ct_frecuenciaCardiaca, n.ct_frecuenciaRespiratoria, n.ct_temperatura, n.ct_presionArterial, n.emailCreado ' +
+            'n.ct_frecuenciaCardiaca, n.ct_frecuenciaRespiratoria, n.ct_temperatura, n.ct_presionArterial, n.ct_presionArterial2, n.emailCreado ' +
             'FROM Nota n, UsuarioNotaCrossRef u_n ' +
             'WHERE u_n.email = ? ' +
             'AND u_n.planta = n.planta ' +
@@ -148,7 +148,7 @@ router.get('/:emailUser/buscar/:planta', async function (req, res) {
         // Creamos la consulta en función de los parámetros recibidos
 
         sqlQuery = 'SELECT n.planta, n.habitacion, n.cama, n.fechaActualizacion, n.observaciones1, n.observaciones2, ' +
-            'n.ct_frecuenciaCardiaca, n.ct_frecuenciaRespiratoria, n.ct_temperatura, n.ct_presionArterial, n.emailCreado ' +
+            'n.ct_frecuenciaCardiaca, n.ct_frecuenciaRespiratoria, n.ct_temperatura, n.ct_presionArterial, n.ct_presionArterial2, n.emailCreado ' +
             'FROM Nota n, UsuarioNotaCrossRef u_n ' +
             'WHERE u_n.email = ? ' +
             'AND u_n.planta = n.planta ' +

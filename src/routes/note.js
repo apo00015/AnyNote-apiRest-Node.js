@@ -8,10 +8,10 @@ const pool = require('../helpers/database');
 router.post('/add', async function (req, res) {
     try {
         // Extraemos los datos de la nota
-        const { planta, habitacion, cama, fechaActualizacion, observaciones1, observaciones2, emailCreado, ct_frecuenciaCardiaca, ct_frecuenciaRespiratoria, ct_temperatura, ct_presionArterial } = req.body;
+        const { planta, habitacion, cama, fechaActualizacion, observaciones1, observaciones2, emailCreado, ct_frecuenciaCardiaca, ct_frecuenciaRespiratoria, ct_temperatura, ct_presionArterial, ct_presionArterial2 } = req.body;
         // Realizamos la consulta
-        const sqlQuery = 'INSERT INTO Nota (planta, habitacion, cama, fechaActualizacion, observaciones1, observaciones2, emailCreado, ct_frecuenciaCardiaca, ct_frecuenciaRespiratoria, ct_temperatura, ct_presionArterial) VALUES (?,?,?,?,?,?,?,?,?,?,?)';
-        pool.query(sqlQuery, [planta, habitacion, cama, fechaActualizacion, observaciones1, observaciones2, emailCreado, ct_frecuenciaCardiaca, ct_frecuenciaRespiratoria, ct_temperatura, ct_presionArterial], function (err, result) {
+        const sqlQuery = 'INSERT INTO Nota (planta, habitacion, cama, fechaActualizacion, observaciones1, observaciones2, emailCreado, ct_frecuenciaCardiaca, ct_frecuenciaRespiratoria, ct_temperatura, ct_presionArterial, ct_presionArterial2) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)';
+        pool.query(sqlQuery, [planta, habitacion, cama, fechaActualizacion, observaciones1, observaciones2, emailCreado, ct_frecuenciaCardiaca, ct_frecuenciaRespiratoria, ct_temperatura, ct_presionArterial,ct_presionArterial2], function (err, result) {
             if (err) {
                 res.status(400).send(err.message);
             }else{

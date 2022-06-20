@@ -12,6 +12,7 @@
         <th>Evolución/Observaciones</th>
         <th>Plan de actuacion</th>
         <th>Creador de la nota</th>
+        <th>Operaciones</th>
       </tr>
     {{#each notas}}
       <tr>
@@ -26,6 +27,10 @@
         <td>{{observaciones1}}</td>
         <td>{{observaciones2}}</td>
         <td>{{emailCreado}}</td>
+        <td> <button id="editNote" class="btn btn-primary btn-block" onclick="edit()"
+            style="background-color: white; color: black;">
+            Editar Nota
+          </button></td>
       </tr>
     {{else}}
     <div class="col-md-4 mx-auto">
@@ -36,3 +41,11 @@
     {{/each}}
   </table>
 </div>
+
+<script>
+  
+  function edit() {
+    // Mostramos un pop-up
+
+  }
+</script>
